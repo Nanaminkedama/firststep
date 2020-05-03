@@ -1,1 +1,1 @@
-console.log('Hello Nanami!');
+console.log('Hello Nanami Kedama!');
