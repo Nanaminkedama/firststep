@@ -21,8 +21,8 @@
             methods: {
                 getData: async function(){
                     const response = await axios.get('data.json')
-                    console.log(response.data);
-                    this.message = response.data
+                    console.log(response.data.altitude);
+                    this.message = response.data.altitude
                 },
             },
 
