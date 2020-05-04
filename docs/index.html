@@ -3,7 +3,7 @@
     <title>Hello My WebSite!</title>
   </head>
   <body>
-    <p>Hello, Nanamin!</p>
+    <p>Hello, ProtoOut!</p>
 
     <div id="app">
         {{ message }}
@@ -18,16 +18,7 @@
                 message: 'Hello Vue!'
             },
 
-            const app = new Vue({
-            el: '#app',
-            data: {
-                message: 'Hello Vue!'
-            },
-
             methods: {
-                getData: async function(){
-
-                },            methods: {
                 getData: async function(){
                     const response = await axios.get('data.json')
                     console.log(response.data);
@@ -38,14 +29,6 @@
             mounted: function(){
                 this.getData();
             }
-            },
-
-            mounted: function(){
-
-            }
-        })
-
-           
         })
     </script>
   </body>
