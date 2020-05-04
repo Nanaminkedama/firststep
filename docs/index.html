@@ -1,35 +1,30 @@
-<html>
-  <head>
-    <title>Hello My WebSite!</title>
-  </head>
-  <body>
-  // <p>Hello, ProtoOut!</p>
+'use strcit';
 
-    <div id="app">
-        {{ message }}
-    </div>
+const axios = require('axios');
+const fs = require('fs'); //注: npm i 不要
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        const app = new Vue({
-            el: '#app',
-            data: {
-                message: 'Hello Vue!'
-            },
+//データ更新関数
+async function updateData(newData){
+    const PATH = './docs/data.json';
+    fs.writeFileSync(PATH, JSON.stringify(newData));
+}
 
-            methods: {
-                getData: async function(){
-                    const response = await axios.get('data.json')
-                    console.log(response.data.altitude);
-                    this.message = response.data.altitude
-                },
-            },
+// 実際にデータを取得する getRequest 関数
+async function getRequest() {
+  let response;
+  try {
+    response = await axios.get('https://transit.yahoo.co.jp/traininfo/detail/21/0/');
+    let html = response.data;
+    html = html.replace(/\r?\n/g,""); //整形1: 改行などを削除して整形しやすくする
+    let unko = html.match(/id="mdServiceStatus">(.*?)<\/div>/)[1];
+    unko = unko.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,''); //整形2: タグを削除
+    console.log(unko);
 
-            mounted: function(){
-                this.getData();
-            }
-        })
-    </script>
-  </body>
-</html>
+    await updateData({msg: unko}); //データ更新関数を実行
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// getRequest を呼び出してデータを読み込む
+getRequest();
