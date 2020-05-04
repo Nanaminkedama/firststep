@@ -1,14 +1,37 @@
 <html>
-    <link rel=”stylesheet” href=”style.css”>
   <head>
-    <title>Hello Nanamin!</title>
-    <style>
-  //      p { color: black; }
-        p { font: bold;}
-    </style>
+    <title>Hello My WebSite!</title>
   </head>
   <body>
-    <p>Hello, Nanamin</p>
-  
+    <p>Hello, ProtoOut! 山の手やってみた！！</p>
+
+    <div id="app">
+        {{ message }}
+    </div>
+
+    <!-- 開発バージョン、便利なコンソールの警告が含まれています -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            },
+
+            methods: {
+                getData: async function(){
+                    const response = await axios.get('data.json')
+                    console.log(response.data);
+                    //ここでデータ加工が必要そう
+                    this.message = response.data;
+                },
+            },
+
+            mounted: function(){
+                this.getData();
+            }
+        })
+    </script>
   </body>
 </html>
